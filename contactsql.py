@@ -4,7 +4,7 @@ def create_database():
     c = conn.cursor()
     c.execute(""" CREATE TABLE IF NOT EXISTS contacts  (
               name TEXT,
-              number TEXT
+              number INTEGER
     )""")
     conn.commit()
     conn.close()
@@ -21,18 +21,21 @@ def show_contacts():
     c = conn.cursor()
     c.execute('''SELECT * FROM contacts''')
     contacts = c.fetchall()
-    if contacts:
-        for contact in contacts:
-            print(f"Name: {contact[0]}, Number: {contact[1]}")
-    else:
-        print("no contacts found")
-        conn.close()
+    for contact in contacts:
+        print(f"Name: {contact[0]}, Number: {contact[1]}")
+    if not contacts:
+        print("No contacts found")
+    conn.close()
 
 def delete_contacts(name):
     conn = sqlite3.connect('contacts.db')
     c = conn.cursor()
     c.execute('''DELETE FROM contacts WHERE name = ?''', (name,))
     conn.commit()
+    if c.rowcount > 0:
+        print("Contact deleted")
+    else:
+        print("Name not found, enter a valid name")
     conn.close()
 
 if __name__ == "__main__":
@@ -41,10 +44,13 @@ if __name__ == "__main__":
         print("\n1. Add contact\n2. show contacts\n3. delete contact\n4. exit")
         choice = input("Enter your choice: ")
         if choice == '1':
-            name = input("Enter name: ")
-            number = input("enter number: ")
-            add_contacts(name, number)
-            print("contact added")
+            name = str(input("Enter name: "))
+            try:
+                number = int(input("Enter number: "))
+                add_contacts(name, number)
+                print("Contact added")
+            except:
+                print("Please enter a valid number!")
         
         elif choice == '2':
             show_contacts()
@@ -52,8 +58,7 @@ if __name__ == "__main__":
         elif choice == '3':
             name = input("enter the name of the contact to delete: ")
             delete_contacts(name)
-            print("contact deleted")
-
+            
         elif choice == '4':
             print("BYE!")
             break
