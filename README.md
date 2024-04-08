@@ -1,7 +1,7 @@
 Contact Manager API
 
 How to setup Docker container:
-1. Build Docker image
+1. Build Docker image:
     Go to the folder containing Dockerfile and the source code then try the command: docker build -t firstproj .
 
 2. Run the Docker container:
