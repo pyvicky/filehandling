@@ -17,4 +17,4 @@ How to setup Docker container:
    > select get_contacts then click on try it out on the right> In response body you can find the list of contacts were added to the list.
 
    To DELETE a contact:
-   > select delete_contact then click on try it out on the right> under parameter entet the name which you want to delete then hit execute.
+   > select delete_contact then click on try it out on the right> under parameter enter the name which you want to delete then hit execute.
